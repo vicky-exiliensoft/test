@@ -8,7 +8,10 @@
   },
   "scripts": {
     "dev": "next dev",
+<<<<<<< HEAD
     "build": "next build",
+=======
+>>>>>>> 5644bf7f9f13cc63e2f8374c2217dfb821a185c5
     "start:frontend": "next start",
     "lint": "next lint",
     "prepare": "husky install",

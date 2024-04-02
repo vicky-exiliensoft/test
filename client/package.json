@@ -7,7 +7,7 @@
     "email": "info@exiliensoft.com"
   },
   "scripts": {
-    "dev": "next dev --port",
+    "dev": "next dev",
     "start:frontend": "next start",
     "lint": "next lint",
     "prepare": "husky install",

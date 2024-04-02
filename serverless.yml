@@ -1,0 +1,23 @@
+service: SCCS # Name your service
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage}
+  region: eu-west-3 
+
+functions:
+  app:
+    handler: app.handler
+    events:
+      - httpApi: '*'  # Use 'httpApi' for HTTP API Gateway, supports HTTP methods including 'ANY'
+
+plugins:
+  - serverless-offline # Plugin for local testing. Make sure it's installed in devDependencies.
+
+package:
+  exclude:
+    - node_modules/** # Exclude node_modules folder
+    # - README.md
+    # - package.json
+    # - package-lock.json

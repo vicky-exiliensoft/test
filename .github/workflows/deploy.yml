@@ -1,0 +1,55 @@
+name: Engine dev deployment on lambda
+
+on:
+  push:
+    branches:
+      - ci-lambda-release-dilip
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Install serverless globally
+        run: npm install -g serverless
+
+      - name: Configure serverless authentication
+        run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          npm install
+        env:
+          JWT_SECRET: mySecretKey123
+          BREVO_EMAIL_USER: voxvicky1@gmail.com
+          BREVO_EMAIL_PASSWORD: Demo@123#
+          DB_NAME: mongodb+srv://vicky:Ie8r74NpXgU9h0SB@cluster0.j9olly6.mongodb.net/
+          LABNK_API_KEY: 8ebe6c25-0382-4173-8fea-13b4454df65d
+          LBANK_SECRET_KEY: 09FD93808319B7A32D309A29C6964C1F
+          LBANK_URL: "https://api.lbkex.com/v2"
+          EXPIRE_JSON_WEB_TOKEN: 1h
+          HEXA_GEN: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+        
+
+      - name: Server npm dependencies
+        run: npm ci
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
+          aws-region: "eu-west-3"
+          
+      - name: Deploy lambda function
+        run: sls deploy --stage staging 

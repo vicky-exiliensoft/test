@@ -8,7 +8,6 @@
   },
   "scripts": {
     "dev": "next dev --port",
-    "build": "next build",
     "start:frontend": "next start",
     "lint": "next lint",
     "prepare": "husky install",

@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "start:backend": "nodemon server/app.js",
     "semantic-release": "semantic-release",
-    "build": "next build"
+    "build": "next build", // Comma added here
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
   "dependencies": {
